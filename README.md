@@ -29,17 +29,17 @@ Ensure you have Python 3.10 installed on your machine.
 git clone https://github.com/your-username/whatsapp-chat-analysis.git
 cd whatsapp-chat-analysis
 ### Step 2: Create a virtual environment (optional but recommended)
-bash
-Copy code
+
+Copy code :
 python -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ### Step 3: Install the dependencies
-bash
-Copy code
+
+Copy code :
 pip install -r requirements.txt
 ### Step 4: Run the app
-bash
-Copy code
+
+Copy code :
 streamlit run app.py
 Visit http://localhost:8501 in your web browser to interact with the app.
 
