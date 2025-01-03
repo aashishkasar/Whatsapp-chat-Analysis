@@ -15,7 +15,7 @@ This project is a WhatsApp chat analyzer built using Python and Streamlit. It al
 
 ## Demo
 
-You can try out the live demo of this project on [Streamlit Demo](#) ([https://whatsapp-chat-analysis-b7ztkmuqysbwinh7ma7vld.streamlit.app/]).
+You can try out the live demo of this project on [Streamlit Demo](https://whatsapp-chat-analysis-b7ztkmuqysbwinh7ma7vld.streamlit.app/).
 
 ## Installation
 
