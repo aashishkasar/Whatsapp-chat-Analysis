@@ -22,10 +22,9 @@ To run this project locally, follow the instructions below:
 
 ### Prerequisites
 
-Ensure you have Python 3.x installed on your machine.
+Ensure you have Python 3.10 installed on your machine.
 
 ### Step 1: Clone the repository
-
 
 git clone https://github.com/your-username/whatsapp-chat-analysis.git
 cd whatsapp-chat-analysis
@@ -44,29 +43,29 @@ Copy code
 streamlit run app.py
 Visit http://localhost:8501 in your web browser to interact with the app.
 
-Usage
+## Usage
 Upload WhatsApp Chat File: Upload a WhatsApp chat in text format (ensure it is properly formatted).
 Select User: Choose the user whose data you want to analyze, or select "Overall" for group-wide analysis.
 View Insights: The app will display various analytics such as message statistics, activity timelines, word clouds, emoji usage, and sentiment distribution.
-File Format
-The app accepts WhatsApp chat files in plain text format with the following structure:
 
-sql
-Copy code
+## File Format
+The app accepts WhatsApp chat files in plain text format with the following structure:
 [Date, Time] - User: Message
 Ensure that the chat export is from WhatsApp and in the required format.
 
-Contributing
+## Contributing
 Fork the repository.
 Create a new branch (git checkout -b feature-branch).
 Make your changes and commit them (git commit -am 'Add new feature').
 Push to the branch (git push origin feature-branch).
 Open a pull request.
-License
+
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Acknowledgements
+## Acknowledgements
 The project uses several Python libraries including Streamlit, Matplotlib, Seaborn, WordCloud, TextBlob, and more.
 Special thanks to Streamlit for making it easy to build and deploy this web app.
-Contact
+
+## Contact
 For any questions, feel free to reach out to [aashishkasar2011@example.com].
