@@ -15,7 +15,7 @@ This project is a WhatsApp chat analyzer built using Python and Streamlit. It al
 
 ## Demo
 
-You can try out the live demo of this project on https://whatsapp-chat-analysis-b7ztkmuqysbwinh7ma7vld.streamlit.app/
+You can try out the live demo of this project on (Copy the link and paste it into your browser.) https://whatsapp-chat-analysis-b7ztkmuqysbwinh7ma7vld.streamlit.app/
 ## Installation
 
 To run this project locally, follow the instructions below:
@@ -26,19 +26,19 @@ Ensure you have Python 3.x installed on your machine.
 
 ### Step 1: Clone the repository
 
-```bash
+
 git clone https://github.com/your-username/whatsapp-chat-analysis.git
 cd whatsapp-chat-analysis
-Step 2: Create a virtual environment (optional but recommended)
+### Step 2: Create a virtual environment (optional but recommended)
 bash
 Copy code
 python -m venv venv
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-Step 3: Install the dependencies
+### Step 3: Install the dependencies
 bash
 Copy code
 pip install -r requirements.txt
-Step 4: Run the app
+### Step 4: Run the app
 bash
 Copy code
 streamlit run app.py
