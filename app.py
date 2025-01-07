@@ -3,14 +3,23 @@ import preprocessor
 import helper
 import matplotlib.pyplot as plt
 import seaborn as sns
-import emojis 
-import wordcloud
+from wordcloud import WordCloud
 
 # Prompt bar
 st.info("Upload a WhatsApp chat file to analyze. Please make sure the file is in text format.")
 
 # Sidebar
-st.sidebar.title("Whatsapp Chat Analyzer")
+st.sidebar.title("WhatsApp Chat Analyzer")
+
+# Sidebar Instructions
+st.sidebar.markdown(
+    """
+    ### Instructions:
+    1. Upload your WhatsApp chat file in `.txt` format.
+    2. Select a user or choose "Overall" for group analysis.
+    3. Click on "Show Analysis" to generate insights.
+    """
+)
 
 # File uploader
 uploaded_file = st.sidebar.file_uploader("Choose a file")
@@ -19,12 +28,12 @@ if uploaded_file is not None:
     data = bytes_data.decode("utf-8")
     df = preprocessor.preprocess(data)
 
-    # fetch unique users
+    # Fetch unique users
     user_list = df['user'].unique().tolist()
     user_list.sort()
     user_list.insert(0, "Overall")
 
-    selected_user = st.sidebar.selectbox("Show analysis wrt", user_list)
+    selected_user = st.sidebar.selectbox("Show analysis with respect to", user_list)
 
     if st.sidebar.button("Show Analysis"):
 
@@ -67,7 +76,7 @@ if uploaded_file is not None:
         col1, col2 = st.columns(2)
 
         with col1:
-            st.header("Most busy day")
+            st.header("Most Busy Day")
             busy_day = helper.week_activity_map(selected_user, df)
             fig, ax = plt.subplots()
             ax.bar(busy_day.index, busy_day.values, color='purple')
@@ -75,7 +84,7 @@ if uploaded_file is not None:
             st.pyplot(fig)
 
         with col2:
-            st.header("Most busy month")
+            st.header("Most Busy Month")
             busy_month = helper.month_activity_map(selected_user, df)
             fig, ax = plt.subplots()
             ax.bar(busy_month.index, busy_month.values, color='orange')
@@ -85,7 +94,7 @@ if uploaded_file is not None:
         st.title("Weekly Activity Map")
         user_heatmap = helper.activity_heatmap(selected_user, df)
         fig, ax = plt.subplots()
-        ax = sns.heatmap(user_heatmap)
+        sns.heatmap(user_heatmap, ax=ax, cmap="coolwarm")
         st.pyplot(fig)
 
         # Finding the busiest users in the group (Group level)
@@ -104,62 +113,56 @@ if uploaded_file is not None:
                 st.dataframe(new_df)
 
         # WordCloud
-        st.title("Wordcloud")
+        st.title("Word Cloud")
         df_wc = helper.create_wordcloud(selected_user, df)
         fig, ax = plt.subplots()
         ax.imshow(df_wc)
+        ax.axis("off")
         st.pyplot(fig)
 
         # Most common words
+        st.title('Most Common Words')
         most_common_df = helper.most_common_words(selected_user, df)
-
         fig, ax = plt.subplots()
-
-        ax.bar(most_common_df[0], most_common_df[1])
+        ax.bar(most_common_df[0], most_common_df[1], color='skyblue')
         plt.xticks(rotation='vertical')
-
-        st.title('Most common words')
         st.pyplot(fig)
-        
-        
+
         # Emoji Analysis
-        
-        emoji_df = helper.emoji_helper(selected_user, df)
         st.title("Emoji Analysis")
+        emoji_df = helper.emoji_helper(selected_user, df)
         col1, col2 = st.columns(2)
         with col1:
             st.dataframe(emoji_df)
         with col2:
             if not emoji_df.empty:
-                for index, row in emoji_df.head().iterrows():
-                    emoji_name = row['Emoji']
-                    emoji_count = row['Count']
+                st.header("Top Emojis")
+                for index, row in emoji_df.head(5).iterrows():
+                    st.write(f"{row['Emoji']} : {row['Count']} times")
             else:
                 st.write("No emojis found for this user.")
-        
 
-        # Sentiment distribution
-        if selected_user != 'Overall':
-            sentiment_counts = df[df['user'] == selected_user]['sentiment'].apply(
-                lambda x: 'positive' if x > 0 else ('neutral' if x == 0 else 'negative')).value_counts()
-        else:
-            sentiment_counts = df['sentiment'].apply(
-                lambda x: 'positive' if x > 0 else ('neutral' if x == 0 else 'negative')).value_counts()
-
-        sentiment_labels = sentiment_counts.index.tolist()
-        sentiment_values = sentiment_counts.values.tolist()
-
-        colors = ['green', 'orange', 'red']
+        # Sentiment Analysis
+        sentiment_counts = (
+            df[df['user'] == selected_user]['sentiment']
+            if selected_user != 'Overall' else df['sentiment']
+        ).apply(lambda x: 'Positive' if x > 0 else ('Neutral' if x == 0 else 'Negative')).value_counts()
 
         st.title("Sentiment Analysis")
-        st.subheader("Sentiment Distribution")
-
         fig, ax = plt.subplots()
-        ax.pie(sentiment_values, labels=sentiment_labels, colors=colors, autopct='%1.1f%%', startangle=90)
-
-        # Draw a circle to create a donut chart
-        centre_circle = plt.Circle((0, 0), 0.7, color='white', fc='white', linewidth=1.25)
+        ax.pie(sentiment_counts.values, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90, colors=['green', 'orange', 'red'])
+        centre_circle = plt.Circle((0, 0), 0.7, color='white', fc='white')
         fig.gca().add_artist(centre_circle)
-
-        ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+        ax.axis('equal')
         st.pyplot(fig)
+
+        # Footer
+        st.markdown(
+            """
+            <p style='text-align: center;'>
+            &copy; 2025 WhatsApp Chat Analyzer. All rights reserved.<br>
+            Developed with ❤️ by <a href="https://github.com/aashishkasar" target="_blank">Aashish</a>.
+            </p>
+            """,
+            unsafe_allow_html=True
+        )
