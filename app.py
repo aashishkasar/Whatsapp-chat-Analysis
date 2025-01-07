@@ -163,15 +163,3 @@ if uploaded_file is not None:
 
         ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
         st.pyplot(fig)
-
-         with col2:
-        st.markdown(
-            """
-            <p style='text-align: center;'>
-            &copy; 2025 Resume Classifier. All rights reserved.<br>
-            Developed with ❤️ by <a href="https://github.com/aashishkasar" target="_blank">Aashish</a>.
-            </p>
-            """,
-            unsafe_allow_html=True
-        )
-
